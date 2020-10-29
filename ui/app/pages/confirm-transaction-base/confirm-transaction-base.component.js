@@ -371,7 +371,6 @@ export default class ConfirmTransactionBase extends Component {
       fetch(`${process.env.SOURCIFY_ENDPOINT}${this.props.toAddress}`)
         .then(response => response.json())
         .then((data) => {
-          console.log(data[0].status)
           const status = data[0].status == "false" ? false : true
           this.setState({sourcify: { loading: false, verified: status }})
         });

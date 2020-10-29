@@ -46,7 +46,7 @@ export default class ConfirmPageContainerContent extends Component {
   }
 
   renderTabs () {
-    const { detailsComponent, dataComponent, sourcifyComponent } = this.props
+    const { detailsComponent, dataComponent, sourcifyComponent, action } = this.props
 
     return (
       <Tabs>
@@ -56,9 +56,12 @@ export default class ConfirmPageContainerContent extends Component {
         <Tab className="confirm-page-container-content__tab" name="Data">
           { dataComponent }
         </Tab>
-        <Tab className="confirm-page-container-content__tab" name="Sourcify">
-          { sourcifyComponent }
-        </Tab>
+        { action == "Contract Deployment" ? null : 
+          <Tab className="confirm-page-container-content__tab" name="Sourcify">
+            { sourcifyComponent }
+          </Tab> 
+        }
+        
       </Tabs>
     )
   }
