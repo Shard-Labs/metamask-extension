@@ -17,6 +17,7 @@ const { makeStringTransform } = require('browserify-transform-tools')
 
 const conf = require('rc')('metamask', {
   INFURA_PROJECT_ID: process.env.INFURA_PROJECT_ID,
+  SOURCIFY_SERVER_URL: process.env.SOURCIFY_SERVER_URL,
   SEGMENT_WRITE_KEY: process.env.SEGMENT_WRITE_KEY,
   SEGMENT_LEGACY_WRITE_KEY: process.env.SEGMENT_LEGACY_WRITE_KEY,
 })
@@ -344,6 +345,7 @@ function createScriptTasks ({ browserPlatforms, livereload }) {
           ? '00000000000000000000000000000000'
           : conf.INFURA_PROJECT_ID
       ),
+      SOURCIFY_ENDPOINT: `${conf.SOURCIFY_SERVER_URL}checkByAddresses?chainIds=1,3,4,42,5&addresses=`, 
       SEGMENT_WRITE_KEY: environment === 'production' ? SEGMENT_PROD_WRITE_KEY : SEGMENT_DEV_WRITE_KEY,
       SEGMENT_LEGACY_WRITE_KEY: environment === 'production' ? process.env.SEGMENT_LEGACY_WRITE_KEY : SEGMENT_LEGACY_WRITE_KEY,
     }), {

@@ -11,6 +11,7 @@ export default class ConfirmPageContainerContent extends Component {
     action: PropTypes.string,
     dataComponent: PropTypes.node,
     detailsComponent: PropTypes.node,
+    sourcifyComponent: PropTypes.node,
     errorKey: PropTypes.string,
     errorMessage: PropTypes.string,
     hideSubtitle: PropTypes.bool,
@@ -45,7 +46,7 @@ export default class ConfirmPageContainerContent extends Component {
   }
 
   renderTabs () {
-    const { detailsComponent, dataComponent } = this.props
+    const { detailsComponent, dataComponent, sourcifyComponent } = this.props
 
     return (
       <Tabs>
@@ -54,6 +55,9 @@ export default class ConfirmPageContainerContent extends Component {
         </Tab>
         <Tab className="confirm-page-container-content__tab" name="Data">
           { dataComponent }
+        </Tab>
+        <Tab className="confirm-page-container-content__tab" name="Sourcify">
+          { sourcifyComponent }
         </Tab>
       </Tabs>
     )

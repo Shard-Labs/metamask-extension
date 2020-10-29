@@ -34,6 +34,7 @@ export default class ConfirmPageContainer extends Component {
     errorMessage: PropTypes.string,
     dataComponent: PropTypes.node,
     detailsComponent: PropTypes.node,
+    sourcifyComponent: PropTypes.node,
     identiconAddress: PropTypes.string,
     nonce: PropTypes.string,
     assetImage: PropTypes.string,
@@ -81,6 +82,7 @@ export default class ConfirmPageContainer extends Component {
       summaryComponent,
       detailsComponent,
       dataComponent,
+      sourcifyComponent,
       onCancelAll,
       onCancel,
       onSubmit,
@@ -151,6 +153,7 @@ export default class ConfirmPageContainer extends Component {
               summaryComponent={summaryComponent}
               detailsComponent={detailsComponent}
               dataComponent={dataComponent}
+              sourcifyComponent={sourcifyComponent}
               errorMessage={errorMessage}
               errorKey={errorKey}
               identiconAddress={identiconAddress}

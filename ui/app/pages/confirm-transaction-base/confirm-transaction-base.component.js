@@ -104,6 +104,7 @@ export default class ConfirmTransactionBase extends Component {
     submitting: false,
     submitError: null,
     submitWarning: '',
+    sourcify: { loading: true, verified: false }
   }
 
   componentDidUpdate (prevProps) {
@@ -363,6 +364,23 @@ export default class ConfirmTransactionBase extends Component {
         </div>
       </div>
     )
+  }
+
+  renderSourcify () {
+    if(this.state.sourcify.loading) {
+      fetch(`${process.env.SOURCIFY_ENDPOINT}${this.props.toAddress}`)
+        .then(response => response.json())
+        .then((data) => {
+          console.log(data[0].status)
+          const status = data[0].status == "false" ? false : true
+          this.setState({sourcify: { loading: false, verified: status }})
+        });
+    }
+    
+    return this.state.sourcify.verified ? 
+    <h1>Verified</h1>
+    :
+    <h1>Unverified</h1>
   }
 
   handleEdit () {
@@ -696,6 +714,7 @@ export default class ConfirmTransactionBase extends Component {
         summaryComponent={summaryComponent}
         detailsComponent={this.renderDetails()}
         dataComponent={this.renderData(functionType)}
+        sourcifyComponent={this.renderSourcify()}
         contentComponent={contentComponent}
         nonce={customNonceValue || nonce}
         unapprovedTxCount={unapprovedTxCount}
