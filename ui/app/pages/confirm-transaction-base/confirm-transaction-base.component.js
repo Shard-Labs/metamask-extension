@@ -380,18 +380,30 @@ export default class ConfirmTransactionBase extends Component {
               let metadata;
               console.log(data)
               for(const file of data) {
-                file.name == "metadata.json" ? metadata=file.content : sources.push(file.content)
+                file.name == "metadata.json" ? metadata=file.content : sources.push({ code: file.content, name: file.name})
               }
               this.setState({sourcify: { loading: false, verified: status, data: { metadata: metadata, sources: sources } }})
           });
           
         });
     }
-    
+    // <div className="confirm-page-container-content__data-box">{!this.state.sourcify.data.error ? 
+    //   this.state.sourcify.data.sources[0]
+    //    : "Verified contract"}</div>
+
     return this.state.sourcify.verified ? 
-    <div className="confirm-page-container-content__data-box">{!this.state.sourcify.data.error ? 
-      this.state.sourcify.data.sources[0]
-       : "Verified contract"}</div>
+    <div className="confirm-page-container-content__data">
+      {this.state.sourcify.data.sources.map((source)=>
+      <div>
+        <div className="confirm-page-container-content__data-box-label">{source.name}</div>
+        <div className="confirm-page-container-content__data-box">{source.code}</div>
+      </div>
+      )}
+      <div className="confirm-page-container-content__data-box-label">
+          Metadata file:
+        </div>
+        <div className="confirm-page-container-content__data-box">${this.state.sourcify.data.metadata}</div>
+    </div>
     :
     <div>Unverified contract</div>
   }
