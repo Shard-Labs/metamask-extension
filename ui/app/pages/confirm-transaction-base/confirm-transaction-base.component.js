@@ -104,7 +104,7 @@ export default class ConfirmTransactionBase extends Component {
     submitting: false,
     submitError: null,
     submitWarning: '',
-    sourcify: { loading: true, verified: false, data: undefined }
+    sourcify: { loading: true, verified: false, data: { metadata: undefined, sources: [] } }
   }
 
   componentDidUpdate (prevProps) {
@@ -376,14 +376,22 @@ export default class ConfirmTransactionBase extends Component {
           fetch(`${process.env.SOURCIFY_SERVER_URL}/files/${txData.metamaskNetworkId}/${toAddress}`)
             .then(response => response.json())
             .then((data) => {
-              this.setState({sourcify: { loading: false, verified: status, data: data }})
+              let sources = [];
+              let metadata;
+              console.log(data)
+              for(const file of data) {
+                file.name == "metadata.json" ? metadata=file.content : sources.push(file.content)
+              }
+              this.setState({sourcify: { loading: false, verified: status, data: { metadata: metadata, sources: sources } }})
           });
           
         });
     }
     
     return this.state.sourcify.verified ? 
-    <div>{!this.state.sourcify.data.error ? this.state.sourcify.data[0].content : "Verified contract"}</div>
+    <div className="confirm-page-container-content__data-box">{!this.state.sourcify.data.error ? 
+      this.state.sourcify.data.sources[0]
+       : "Verified contract"}</div>
     :
     <div>Unverified contract</div>
   }
