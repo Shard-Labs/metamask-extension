@@ -383,9 +383,9 @@ export default class ConfirmTransactionBase extends Component {
     }
     
     return this.state.sourcify.verified ? 
-    <div>{this.state.sourcify.data ? this.state.sourcify.data[0].content : "Verified"}</div>
+    <div>{!this.state.sourcify.data.error ? this.state.sourcify.data[0].content : "Verified contract"}</div>
     :
-    <div>Unverified</div>
+    <div>Unverified contract</div>
   }
 
   handleEdit () {
