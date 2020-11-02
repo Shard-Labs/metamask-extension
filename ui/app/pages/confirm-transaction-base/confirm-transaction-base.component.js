@@ -104,7 +104,7 @@ export default class ConfirmTransactionBase extends Component {
     submitting: false,
     submitError: null,
     submitWarning: '',
-    sourcify: { loading: true, verified: false }
+    sourcify: { loading: true, verified: false, data: undefined }
   }
 
   componentDidUpdate (prevProps) {
@@ -367,19 +367,25 @@ export default class ConfirmTransactionBase extends Component {
   }
 
   renderSourcify () {
+    const { toAddress, txData } = this.props;
     if(this.state.sourcify.loading) {
-      fetch(`${process.env.SOURCIFY_ENDPOINT}${this.props.toAddress}`)
+      fetch(`${process.env.SOURCIFY_SERVER_URL}/checkByAddresses?chainIds=${txData.metamaskNetworkId}&addresses=${toAddress}`)
         .then(response => response.json())
         .then((data) => {
           const status = data[0].status == "false" ? false : true
-          this.setState({sourcify: { loading: false, verified: status }})
+          fetch(`${process.env.SOURCIFY_SERVER_URL}/files/${txData.metamaskNetworkId}/${toAddress}`)
+            .then(response => response.json())
+            .then((data) => {
+              this.setState({sourcify: { loading: false, verified: status, data: data }})
+          });
+          
         });
     }
     
     return this.state.sourcify.verified ? 
-    <h1>Verified</h1>
+    <div>{this.state.sourcify.data ? this.state.sourcify.data[0].content : "Verified"}</div>
     :
-    <h1>Unverified</h1>
+    <div>Unverified</div>
   }
 
   handleEdit () {

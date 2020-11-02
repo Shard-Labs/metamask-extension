@@ -345,7 +345,7 @@ function createScriptTasks ({ browserPlatforms, livereload }) {
           ? '00000000000000000000000000000000'
           : conf.INFURA_PROJECT_ID
       ),
-      SOURCIFY_ENDPOINT: `${conf.SOURCIFY_SERVER_URL}checkByAddresses?chainIds=1,3,4,42,5&addresses=`, 
+      SOURCIFY_SERVER_URL: conf.SOURCIFY_SERVER_URL, 
       SEGMENT_WRITE_KEY: environment === 'production' ? SEGMENT_PROD_WRITE_KEY : SEGMENT_DEV_WRITE_KEY,
       SEGMENT_LEGACY_WRITE_KEY: environment === 'production' ? process.env.SEGMENT_LEGACY_WRITE_KEY : SEGMENT_LEGACY_WRITE_KEY,
     }), {
